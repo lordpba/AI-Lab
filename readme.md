@@ -1,6 +1,8 @@
 # AI Mail
 
 AI Mail is a Python application that uses AI to interact with emails.
+It replies to the mail sent to the mail into the configration. It uses Ollama on your local machine
+To install ollama check: https://github.com/ollama/ollama
 
 ## Setup
 
