@@ -30,7 +30,6 @@ email_password = os.getenv('EMAIL_PASSWORD')  # Get password from environment va
 llm = ChatOllama(model="gemma:7b", temperature=0.2)
 embedding = OllamaEmbeddings(model="gemma:7b")
 
-
 def check_for_new_emails():
     mail = imaplib.IMAP4_SSL(imap_host)
     mail.login(email_account, email_password)
@@ -135,7 +134,7 @@ def process_email(email_message):
     llm_response = (chain.invoke({"topic": body }))
     save_qa_to_log(body, llm_response)
     print(llm_response)
-    send_email_response(llm_response, email_message['From'])
+    send_email_response(llm_response, email_message)
 
 def get_email_body(email_message):
     body = ""
@@ -151,24 +150,28 @@ def get_email_body(email_message):
     # not multipart - i.e. plain text, no attachments, keeping fingers crossed
     else:
         body = email_message.get_payload(decode=True)
-    return body.decode('utf-8')
+    return body.decode('utf-8', errors='ignore')
 
 def send_email_response(response, email_message):
-    msg = email.mime.text.MIMEText(response)
-    msg['Subject'] = 'Re: ' + email_message['Subject']
+    msg = MIMEText(response)
+    msg['Subject'] = 'Risposta Automatica da AiLab306'
     msg['From'] = email_account
-    msg['To'] = email_message['To']
-    msg['Cc'] = email_message['Cc'] if 'Cc' in email_message else None
-    msg['In-Reply-To'] = email_message['Message-ID']
-    msg['References'] = email_message['Message-ID']
-
-    with smtplib.SMTP_SSL(smtp_host, 465) as smtp:
+    msg['To'] = email_message['From']
+    
+    # Aggiungi destinatari in CC se presenti
+    if 'Cc' in email_message:
+        msg['Cc'] = email_message['Cc']
+    
+    with smtplib.SMTP_SSL(smtp_host, 465) as smtp:  # Nota l'uso di SMTP_SSL e la porta 465
         smtp.login(email_account, email_password)
-        smtp.send_message(msg)
+        # Includi sia i destinatari 'To' che 'Cc' quando invii il messaggio
+        recipients = [email_message['From']]
+        if 'Cc' in email_message:
+            recipients += email_message['Cc'].split(',')
+        smtp.send_message(msg, to_addrs=recipients)
 
 if __name__ == '__main__':
     while True:
         check_for_new_emails()
         print("Attesa per il prossimo controllo...")
-        
         time.sleep(300)  # Pausa di 5 minuti
