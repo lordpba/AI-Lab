@@ -19,7 +19,7 @@ from langchain_chroma import Chroma
 from langchain_community.document_loaders import TextLoader
 from langchain_community.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from langchain_text_splitters import CharacterTextSplitter, RecursiveCharacterTextSplitter
-from langchain_openai import ChatOpenAI
+#from langchain_openai import ChatOpenAI
 import datetime
 from dotenv import load_dotenv
 import os
@@ -33,9 +33,9 @@ imap_host = 'imap.gmail.com'
 smtp_host = 'smtp.gmail.com'
 email_account = os.getenv('EMAIL') # Get email from environment variable
 email_password = os.getenv('EMAIL_PASSWORD')  # Get password from environment variable
-#llm = ChatOllama(model="gemma:7b", temperature=0.2)
-llmOpenAi = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2)
-llm = llmOpenAi # se non si ha Ollama, si può usare OpenAI
+llm = ChatOllama(model="llama3", temperature=0.2)
+#llmOpenAi = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2)
+#llm = llmOpenAi # se non si ha Ollama, si può usare OpenAI
 embedding = OllamaEmbeddings(model="gemma:7b")
 chroma_directory = './chroma/'
 """
