@@ -33,7 +33,7 @@ imap_host = 'imap.gmail.com'
 smtp_host = 'smtp.gmail.com'
 email_account = os.getenv('EMAIL') # Get email from environment variable
 email_password = os.getenv('EMAIL_PASSWORD')  # Get password from environment variable
-llm = ChatOllama(model="llama3", temperature=0.2)
+llm = ChatOllama(model="gemma:7b", temperature=0.2)
 #llmOpenAi = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2)
 #llm = llmOpenAi # se non si ha Ollama, si può usare OpenAI
 embedding = OllamaEmbeddings(model="gemma:7b")
