@@ -3,7 +3,7 @@ import time
 
 start_time = time.time()
 
-model = whisper.load_model("medium")
+model = whisper.load_model("large")
 result = model.transcribe("Intervista_06_maggio.m4a")
 print(result["text"])
 
