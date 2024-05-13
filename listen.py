@@ -25,7 +25,7 @@ print("Transcription saved to", text_file)
 
 import whisper
 
-model = whisper.load_model("medium")
+model = whisper.load_model("tiny")
 
 # load audio and pad/trim it to fit 30 seconds
 audio = whisper.load_audio(".\Intervista 06 maggio.m4a")
