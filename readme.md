@@ -43,6 +43,8 @@ The main functionality of the application is contained in the `AI_mail.py` scrip
 
 The `check_for_new_emails` function is where the main logic of the application resides.
 
+Added Listen function, in deployment, to give the ability to transcribe audio to text and summarize it, usefull for sharing report of meetings
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
