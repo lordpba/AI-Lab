@@ -28,7 +28,7 @@ import whisper
 model = whisper.load_model("tiny")
 
 # load audio and pad/trim it to fit 30 seconds
-audio = whisper.load_audio(".\Intervista 06 maggio.m4a")
+audio = whisper.load_audio("Intervista 06 maggio.m4a")
 audio = whisper.pad_or_trim(audio)
 
 # make log-Mel spectrogram and move to the same device as the model

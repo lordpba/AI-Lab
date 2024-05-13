@@ -30,8 +30,8 @@ smtp_host = os.getenv('SMTP')
 email_account = os.getenv('EMAIL') # Get email from environment variable
 email_password = os.getenv('EMAIL_PASSWORD')  # Get password from environment variable
 
-llm = ChatOllama(model="llama3", temperature=0.0, stop=["<|start_header_id|>", "<|end_header_id|>", "<eot_id>", "<|reserved_special_token"])
-#llmOpenAi = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2)
+#llm = ChatOllama(model="llama3", temperature=0.0, stop=["<|start_header_id|>", "<|end_header_id|>", "<eot_id>", "<|reserved_special_token"])
+llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.1)
 #llm = llmOpenAi # se non si ha Ollama, si può usare OpenAI
 import os
 
