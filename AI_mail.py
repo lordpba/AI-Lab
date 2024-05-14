@@ -12,6 +12,7 @@ import os
 from langchain_community.embeddings.openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_community.chat_models import ChatOpenAI
+from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain_chroma import Chroma
@@ -30,12 +31,11 @@ smtp_host = os.getenv('SMTP')
 email_account = os.getenv('EMAIL') # Get email from environment variable
 email_password = os.getenv('EMAIL_PASSWORD')  # Get password from environment variable
 
-#llm = ChatOllama(model="llama3", temperature=0.0, stop=["<|start_header_id|>", "<|end_header_id|>", "<eot_id>", "<|reserved_special_token"])
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.1)
-#llm = llmOpenAi # se non si ha Ollama, si può usare OpenAI
-import os
-
-
+# Set up the LLM models
+#ollama = ChatOllama(model="llama3", temperature=0.0, stop=["<|start_header_id|>", "<|end_header_id|>", "<eot_id>", "<|reserved_special_token"])
+#gpt3 = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.0)
+groq = ChatGroq(temperature=0.0, model_name="llama3-8b-8192") # mixtral-8x7b-32768 - llama3-70b-8192 - gemma-7b-it - llama3-8b-8192
+llm = groq
 
 
 
