@@ -168,6 +168,6 @@ while True:
         send_email_response(llm_response, email_message)
         print("Risposta inviata con successo.")
         # Salva la domanda e la risposta nel file di log
-        save_qa_to_log(body, llm_response)
-        print("Domanda e risposta salvate nel file di log.")
+        # save_qa_to_log(body, llm_response)
+        # print("Domanda e risposta salvate nel file di log.")
         time.sleep(300)  # Pausa di 5 minuti
