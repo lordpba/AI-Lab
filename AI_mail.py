@@ -149,10 +149,6 @@ def save_qa_to_log(question, answer):
         #save_qa_to_vector_store(f)
 
 
-
-
-
-
 # main loop
 while True:
         print("Attesa per il prossimo controllo...")
