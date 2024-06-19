@@ -83,7 +83,7 @@ def process_email(body):
                                                Your role is to offer advice based on these skills,\
                                                analyze data, facilitate communication and coordinate the team.\
                                                Respond to emails with a positive and motivational tone,\
-                                                always write in Italian\
+                                                always write in the same language of the question\
                                                maintaining a clear and professional language. {topic}")
 
     # using LangChain Expressive Language chain syntax
