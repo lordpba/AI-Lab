@@ -24,7 +24,7 @@ email_password = os.getenv('EMAIL_PASSWORD')  # Get password from environment va
 # Set up the LLM models
 #ollama = ChatOllama(model="llama3", temperature=0.0, stop=["<|start_header_id|>", "<|end_header_id|>", "<eot_id>", "<|reserved_special_token"])
 #gpt3 = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.0)
-groq = ChatGroq(temperature=0.0, model_name="llama3-8b-8192") # mixtral-8x7b-32768 - llama3-70b-8192 - gemma-7b-it - llama3-8b-8192
+groq = ChatGroq(temperature=0.0, model_name="llama-3.1-70b-versatile") # mixtral-8x7b-32768 - llama3-70b-8192 - gemma-7b-it - llama3-8b-8192
 llm = groq
 
 # Check for unread emails and return email_message
