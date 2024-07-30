@@ -156,4 +156,4 @@ while True:
         # Save the question and answer in the log file
         # save_qa_to_log(body, llm_response)
         # print("Question and answer saved in the log file.")
-    time.sleep(300)  # Pause for 5 minutes
+    time.sleep(30)  # Pause for 5 minutes
