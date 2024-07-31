@@ -4,7 +4,7 @@ AI Mail is a Python application that uses AI to interact with emails.
 It replies to the mail sent to the configured email address. 
 
 It utilizes Ollama, if you want a local machine elaboration (GPU required).
-Or it can uses Groq, an API (free actually, with some limits) tha uses a remote Language Processing Unit and some Open Source LLMs, it has a very fast inference speed.
+Or it can uses Groq, an API (free actually, with some limits) that uses a remote Language Processing Unit and some Open Source LLMs, it has a very, very fast inference speed.
 
 To install Ollama, please refer to the official GitHub repository: [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
 
