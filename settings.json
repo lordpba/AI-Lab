@@ -1,0 +1,6 @@
+{
+    "monitoring_active": true,
+    "check_interval": 30,
+    "model": "Groq"
+  }
+  

@@ -5,3 +5,9 @@ prompts.txt
 test_ollama.ipynb
 Intervista_06_maggio.m4a
 /transcriptions
+/old
+old/AI_mail_pre_release.py
+old/AI_mail_tests.ipynb
+old/AI_mail_UI.py
+old/generate_response_rag.py
+old/listen_base.py
