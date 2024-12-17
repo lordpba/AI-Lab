@@ -30,7 +30,7 @@ check_interval = int(os.getenv('CHECK_INTERVAL', 30))  # Check interval in secon
 # LLM Setup
 groq = ChatGroq(temperature=0.2, model_name="llama-3.1-70b-versatile")
 openai = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
-llm = groq
+llm = openai
 
 @traceable
 def process_email(body):

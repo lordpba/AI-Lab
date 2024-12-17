@@ -11,6 +11,7 @@ from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from threading import Thread
 
 # Load environment variables
 load_dotenv()
@@ -19,13 +20,9 @@ smtp_host = os.getenv('SMTP')
 email_account = os.getenv('EMAIL')
 email_password = os.getenv('EMAIL_PASSWORD')
 
-# LLM models setup
+# Define LLM models
 groq = ChatGroq(temperature=0.2, model_name="llama-3.1-70b-versatile")
 openai = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
-
-# Session State Setup for Countdown
-if 'last_check' not in st.session_state:
-    st.session_state['last_check'] = time.time()
 
 # Helper Functions
 def check_emails():
@@ -89,41 +86,43 @@ def send_response(to, response):
 # Streamlit UI
 st.title("Email Assistant Dashboard")
 st.sidebar.header("Configurazione")
+
+# Options in Sidebar
 model_choice = st.sidebar.radio("Seleziona il modello LLM", ["Groq", "OpenAI"])
+check_interval = st.sidebar.slider("Intervallo di controllo (secondi)", 10, 300, 60)
+monitor_emails = st.sidebar.toggle("Attiva monitoraggio email")
 
-# Monitoraggio automatico ogni 10 secondi
-st.write("🔄 **Controllo automatico delle email ogni 10 secondi**")
+# Countdown Timer
+if monitor_emails:
+    countdown = st.empty()
+    stop_flag = False
 
-# Controllo delle email se è passato il tempo stabilito
-current_time = time.time()
-if current_time - st.session_state['last_check'] >= 10:
-    st.session_state['last_check'] = current_time
-    st.experimental_rerun()
+    def monitor_loop():
+        while monitor_emails:
+            countdown.write(f"Prossimo controllo tra {check_interval} secondi...")
+            email_data = check_emails()
+            if email_data:
+                st.write("📧 Nuove email trovate:")
+                for idx, mail in enumerate(email_data):
+                    st.subheader(f"Email #{idx+1}")
+                    st.text(f"Da: {mail['From']}")
+                    st.text(f"Oggetto: {mail['Subject']}")
+                    st.text_area("Contenuto", mail['Body'], height=200)
+                    if st.button(f"Genera risposta per Email #{idx+1}", key=idx):
+                        response = process_email_with_llm(mail['Body'], model_choice)
+                        st.text_area("Risposta generata", response, height=200)
+                        if st.button(f"Invia risposta per Email #{idx+1}", key=f"send_{idx}"):
+                            send_response(mail['From'], response)
+            time.sleep(check_interval)
+    
+    Thread(target=monitor_loop, daemon=True).start()
 
-# Check emails
-email_data = check_emails()
-
-if email_data:
-    st.write("📧 **Nuove email trovate:**")
-    for idx, mail in enumerate(email_data):
-        st.subheader(f"Email #{idx+1}")
-        st.text(f"Da: {mail['From']}")
-        st.text(f"Oggetto: {mail['Subject']}")
-        st.text_area("Contenuto", mail['Body'], height=200)
-
-        # Genera risposta con LLM
-        if st.button(f"Genera risposta per Email #{idx+1}", key=idx):
-            response = process_email_with_llm(mail['Body'], model_choice)
-            st.text_area("Risposta generata", response, height=200)
-            if st.button(f"Invia risposta per Email #{idx+1}", key=f"send_{idx}"):
-                send_response(mail['From'], response)
 else:
-    st.info("Nessuna nuova email trovata al momento.")
+    st.write("Monitoraggio email disattivato. Attivalo dalla sidebar.")
 
-# Log delle email
 st.write("📊 **Log delle email processate**")
 if os.path.exists('ai_lab_logs.xlsx'):
     log_df = pd.read_excel('ai_lab_logs.xlsx')
     st.dataframe(log_df)
 else:
-    st.info("Nessun log trovato.")
+    st.info("Nessun log trovato. Inizia a processare le email!")
